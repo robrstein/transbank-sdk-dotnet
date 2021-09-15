@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Transbank.Common;
 
 namespace Transbank.Webpay.Common
@@ -18,5 +18,7 @@ namespace Transbank.Webpay.Common
             new WebpayIntegrationType("LIVE", "https://webpay3g.transbank.cl");
         public static readonly WebpayIntegrationType Test =
             new WebpayIntegrationType("TEST", "https://webpay3gint.transbank.cl");
+        public static readonly WebpayIntegrationType ServerMock =
+            new WebpayIntegrationType("TEST", "http://localhost:8888");
     }
 }

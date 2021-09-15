@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using Transbank.Common;
 using Transbank.Exceptions;
 using Transbank.Webpay.Common;
+using Transbank.Webpay.Common.Responses;
 using Transbank.Webpay.TransaccionCompleta.Requests;
 using Transbank.Webpay.TransaccionCompleta.Responses;
 
@@ -174,6 +176,50 @@ namespace Transbank.Webpay.TransaccionCompleta
 
                 return JsonConvert.DeserializeObject<RefundResponse>(response);
             });
+        }
+
+
+
+
+        public static IncreaseAmountResponse IncreaseAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.IncreaseAmount(token, buyOrder, authorizationCode, amount, commerceCode, options);
+        }
+
+        public static IncreaseAmountResponse IncreaseAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode)
+        {
+            return TransactionDeferredUtil.IncreaseAmount(token, buyOrder, authorizationCode, amount, commerceCode, DefaultOptions());
+        }
+
+        public static IncreaseAuthorizationDateResponse IncreaseAuthorizationDate(string token, string buyOrder, string authorizationCode, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.IncreaseAuthorizationDate(token, buyOrder, authorizationCode, commerceCode, options);
+        }
+
+        public static IncreaseAuthorizationDateResponse IncreaseAuthorizationDate(string token, string buyOrder, string authorizationCode, string commerceCode)
+        {
+            return TransactionDeferredUtil.IncreaseAuthorizationDate(token, buyOrder, authorizationCode, commerceCode, DefaultOptions());
+        }
+
+        public static ReversePreAuthorizedAmountResponse ReversePreAuthorizedAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.ReversePreAuthorizedAmount(token, buyOrder, authorizationCode, amount, commerceCode, options);
+        }
+
+        public static ReversePreAuthorizedAmountResponse ReversePreAuthorizedAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode)
+        {
+            return TransactionDeferredUtil.ReversePreAuthorizedAmount(token, buyOrder, authorizationCode, amount, commerceCode, DefaultOptions());
+        }
+
+
+        public static List<DeferredCaptureHistoryResponse> DeferredCaptureHistory(string token, string buyOrder, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.DeferredCaptureHistory(token, buyOrder, commerceCode, options);
+        }
+
+        public static List<DeferredCaptureHistoryResponse> DeferredCaptureHistory(string token, string buyOrder, string commerceCode)
+        {
+            return TransactionDeferredUtil.DeferredCaptureHistory(token, buyOrder, commerceCode, DefaultOptions());
         }
     }
 }

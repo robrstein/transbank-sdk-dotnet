@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Transbank.Common;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -16,7 +16,7 @@ namespace Transbank.Webpay.WebpayPlus.Requests
         }
 
         internal RefundRequest(string token, decimal amount)
-            : base($"/rswebpaytransaction/api/webpay/v1.0/transactions/{token}/refunds", HttpMethod.Post)
+            : base($"{Constant.WEBPAY_METHOD}/transactions/{token}/refunds", HttpMethod.Post)
         {
             Amount = amount;
         }

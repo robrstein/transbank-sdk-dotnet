@@ -1,10 +1,14 @@
-﻿using System;
+using System;
 using Newtonsoft.Json;
 using Transbank.Common;
+using Transbank.Exceptions;
 using Transbank.Webpay.Common;
 using Transbank.Webpay.WebpayPlus.Exceptions;
 using Transbank.Webpay.WebpayPlus.Requests;
 using Transbank.Webpay.WebpayPlus.Responses;
+using Transbank.Webpay.Common.Requests;
+using Transbank.Webpay.Common.Responses;
+using System.Collections.Generic;
 
 namespace Transbank.Webpay.WebpayPlus
 {
@@ -97,18 +101,59 @@ namespace Transbank.Webpay.WebpayPlus
             return Capture(token, buyOrder, authorizationCode, captureAmount, null, DefaultOptions());
         }
 
-        public static CaptureResponse Capture(string token, string buyOrder, string authorizationCode,
-            decimal captureAmount, string commerceCode, Options options)
+        public static CaptureResponse Capture(string token, string buyOrder, string authorizationCode, decimal captureAmount, string commerceCode, Options options)
         {
             return ExceptionHandler.Perform<CaptureResponse, TransactionCaptureException>(() =>
             {
-                var captureRequest = new CaptureRequest(token, buyOrder,
-                    authorizationCode, captureAmount, commerceCode);
-                var response = RequestService.Perform<TransactionCaptureException>(
-                    captureRequest, options);
-
+                var captureRequest = new CaptureRequest(token, buyOrder, authorizationCode, captureAmount, commerceCode);
+                var response = RequestService.Perform<TransactionCaptureException>(captureRequest, options);
                 return JsonConvert.DeserializeObject<CaptureResponse>(response);
             });
+        }
+
+
+
+
+
+        public static IncreaseAmountResponse IncreaseAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.IncreaseAmount(token, buyOrder, authorizationCode, amount, commerceCode, options);
+        }
+
+        public static IncreaseAmountResponse IncreaseAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode)
+        {
+            return TransactionDeferredUtil.IncreaseAmount(token, buyOrder, authorizationCode, amount, commerceCode, DefaultOptions());
+        }
+
+        public static IncreaseAuthorizationDateResponse IncreaseAuthorizationDate(string token, string buyOrder, string authorizationCode, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.IncreaseAuthorizationDate(token, buyOrder, authorizationCode, commerceCode, options);
+        }
+
+        public static IncreaseAuthorizationDateResponse IncreaseAuthorizationDate(string token, string buyOrder, string authorizationCode, string commerceCode)
+        {
+            return TransactionDeferredUtil.IncreaseAuthorizationDate(token, buyOrder, authorizationCode, commerceCode, DefaultOptions());
+        }
+
+        public static ReversePreAuthorizedAmountResponse ReversePreAuthorizedAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.ReversePreAuthorizedAmount(token, buyOrder, authorizationCode, amount, commerceCode, options);
+        }
+
+        public static ReversePreAuthorizedAmountResponse ReversePreAuthorizedAmount(string token, string buyOrder, string authorizationCode, decimal amount, string commerceCode)
+        {
+            return TransactionDeferredUtil.ReversePreAuthorizedAmount(token, buyOrder, authorizationCode, amount, commerceCode , DefaultOptions());
+        }
+
+
+        public static List<DeferredCaptureHistoryResponse> DeferredCaptureHistory(string token, string buyOrder, string commerceCode, Options options)
+        {
+            return TransactionDeferredUtil.DeferredCaptureHistory(token, buyOrder, commerceCode, options);
+        }
+
+        public static List<DeferredCaptureHistoryResponse> DeferredCaptureHistory(string token, string buyOrder, string commerceCode)
+        {
+            return TransactionDeferredUtil.DeferredCaptureHistory(token, buyOrder, commerceCode, DefaultOptions());
         }
     }
 }

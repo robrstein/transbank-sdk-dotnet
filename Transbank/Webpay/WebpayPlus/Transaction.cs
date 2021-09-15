@@ -43,8 +43,7 @@ namespace Transbank.Webpay.WebpayPlus
             return new Options(CommerceCode, ApiKey, IntegrationType);
         }
 
-        public static CreateResponse Create(string buyOrder, string sessionId,
-            decimal amount, string returnUrl)
+        public static CreateResponse Create(string buyOrder, string sessionId, decimal amount, string returnUrl)
         {
             return Create(buyOrder, sessionId, amount, returnUrl, DefaultOptions());
         }
